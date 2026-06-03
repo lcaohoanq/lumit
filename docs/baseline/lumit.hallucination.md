@@ -78,6 +78,8 @@ Updated decision: publish core as `@luucaohoang/lumit-core`.
 
 Reason: npm pack verification showed the private workspace core was not bundled into the CLI tarball. Publishing core is required so the installed CLI can resolve `@luucaohoang/lumit-core` at runtime.
 
+Implementation note: local workspace development uses `file:../core` for CLI and desktop dependencies. The release workflow rewrites the CLI dependency to the published core version before `npm publish`.
+
 ### Decision 7: Desktop Packaging
 
 Options:

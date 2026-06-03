@@ -17,6 +17,9 @@
 | Doctor command | Completed | `lumit doctor` added in CLI package. |
 | Desktop app | Completed | Electron + React package added under `packages/desktop`. |
 | CI/release/readme | Completed | Workspace scripts, workflows, README, and package checks updated. |
+| Electron local repair | Completed | Added `npm run repair:electron`; desktop dev script calls the repair file directly from the workspace. |
+| Electron launcher | Completed | Added launcher that removes `ELECTRON_RUN_AS_NODE` before opening desktop app. |
+| Local core dependency | Completed | CLI and desktop use `file:../core` locally; release rewrites CLI to the published core version. |
 
 ## Current Target
 

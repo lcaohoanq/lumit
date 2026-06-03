@@ -153,6 +153,15 @@ Run desktop app:
 npm run dev:desktop
 ```
 
+If Electron reports a missing `path.txt` or binary, repair the local Electron install and run again:
+
+```bash
+npm run repair:electron
+npm run dev:desktop
+```
+
+If your shell has `ELECTRON_RUN_AS_NODE=1`, the desktop script still works because it launches Electron through `scripts/run-electron.mjs` and removes that variable for the child process.
+
 Pack the CLI package:
 
 ```bash

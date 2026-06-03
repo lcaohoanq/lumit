@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from "electron";
+import { createRequire } from "node:module";
 import type {
   CreateProjectOptions,
   CreateProjectResult,
@@ -6,6 +6,10 @@ import type {
   ProjectLogEvent,
   ProjectStepEvent
 } from "@luucaohoang/lumit-core";
+
+const require = createRequire(import.meta.url);
+const electron = require("electron") as typeof import("electron");
+const { contextBridge, ipcRenderer } = electron;
 
 export type DesktopProjectEvent =
   | { type: "step"; payload: ProjectStepEvent }

@@ -39,6 +39,11 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Use published core version for CLI package
+        run: |
+          CORE_VERSION=$(node -p "require('./packages/core/package.json').version")
+          npm pkg set "dependencies.@luucaohoang/lumit-core=$CORE_VERSION" --workspace packages/cli
+
       - name: Publish CLI package
         run: npm publish --workspace packages/cli --provenance
         env:

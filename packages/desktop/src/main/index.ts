@@ -1,12 +1,15 @@
-import { app, BrowserWindow, dialog, ipcMain, shell } from "electron";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawn } from "node:child_process";
+import { createRequire } from "node:module";
 import { checkEnvironment, createProject, type CreateProjectOptions } from "@luucaohoang/lumit-core";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
+const electron = require("electron") as typeof import("electron");
+const { app, BrowserWindow, dialog, ipcMain, shell } = electron;
 
-let mainWindow: BrowserWindow | undefined;
+let mainWindow: Electron.BrowserWindow | undefined;
 
 async function createWindow(): Promise<void> {
   mainWindow = new BrowserWindow({

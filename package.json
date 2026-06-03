@@ -15,9 +15,11 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "dev:cli": "npm run dev --workspace packages/cli --",
     "dev:desktop": "npm run dev --workspace packages/desktop",
+    "repair:electron": "node scripts/ensure-electron.mjs",
     "pack:cli": "npm pack --workspace packages/cli --dry-run"
   },
   "devDependencies": {
+    "@electron/get": "^5.0.0",
     "@types/node": "^22.13.10",
     "typescript": "^5.8.2"
   },
