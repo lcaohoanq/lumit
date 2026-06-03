@@ -114,20 +114,20 @@ Before the first release:
 
 1. Create an npm automation token.
 2. Add it to the GitHub repository secrets as `NPM_TOKEN`.
-3. Make sure the package name in `package.json` is available to your npm account.
+3. Make sure the package scope in `package.json` belongs to your npm account or organization.
 
-The package name `lumit` was not found on npm during setup. If it becomes unavailable or you prefer a scoped package, rename this package:
+This package is published under the scoped npm name `@luucaohoang/lumit`, while the installed CLI command remains `lumit`:
 
 ```json
 {
-  "name": "@your-scope/lumit",
+  "name": "@luucaohoang/lumit",
   "bin": {
     "lumit": "./dist/index.js"
   }
 }
 ```
 
-Then publish the scoped package publicly through the same release workflow.
+If your npm account uses a different scope, update the `name` field before publishing.
 
 Release flow:
 
@@ -151,7 +151,7 @@ npm publish --provenance
 Users can install the published CLI with:
 
 ```bash
-npm install -g lumit
+npm install -g @luucaohoang/lumit
 lumit create my-app --template react-vite-ts
 ```
 

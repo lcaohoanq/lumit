@@ -1,11 +1,11 @@
 {
-  "name": "lumit",
+  "name": "@luucaohoang/lumit",
   "version": "0.1.1",
   "description": "A modular starter project generator CLI for developers.",
   "type": "module",
   "packageManager": "npm@11.13.0",
   "bin": {
-    "lumit": "./dist/index.js"
+    "lumit": "dist/index.js"
   },
   "files": [
     "dist"
@@ -26,6 +26,14 @@
   ],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/lcaohoanq/lumit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lcaohoanq/lumit/issues"
+  },
+  "homepage": "https://github.com/lcaohoanq/lumit#readme",
   "publishConfig": {
     "access": "public",
     "provenance": true
