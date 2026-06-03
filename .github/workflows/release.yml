@@ -23,28 +23,32 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org
-          cache: npm
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Typecheck
-        run: npm run typecheck
+        run: bun run typecheck
 
       - name: Build
-        run: npm run build
+        run: bun run build
 
       - name: Publish core package
-        run: npm publish --workspace packages/core --provenance
+        run: npm publish packages/core --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Use published core version for CLI package
         run: |
           CORE_VERSION=$(node -p "require('./packages/core/package.json').version")
-          npm pkg set "dependencies.@luucaohoang/lumit-core=$CORE_VERSION" --workspace packages/cli
+          bun pm pkg set "dependencies.@luucaohoang/lumit-core=$CORE_VERSION" --cwd packages/cli
 
       - name: Publish CLI package
-        run: npm publish --workspace packages/cli --provenance
+        run: npm publish packages/cli --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

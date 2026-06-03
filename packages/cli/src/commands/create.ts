@@ -116,7 +116,7 @@ async function resolvePackageManager(packageManagerOption: string | undefined, i
   }
 
   if (!interactive) {
-    return "npm";
+    return "bun";
   }
 
   return select({
@@ -125,7 +125,7 @@ async function resolvePackageManager(packageManagerOption: string | undefined, i
       name: packageManager,
       value: packageManager
     })),
-    default: "npm"
+    default: "bun"
   });
 }
 

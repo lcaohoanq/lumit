@@ -1,6 +1,6 @@
 import type { PackageManager } from "./types.js";
 
-export const packageManagers: PackageManager[] = ["npm", "pnpm", "yarn", "bun"];
+export const packageManagers: PackageManager[] = ["bun", "npm", "pnpm", "yarn"];
 
 export function isPackageManager(value: string): value is PackageManager {
   return packageManagers.includes(value as PackageManager);

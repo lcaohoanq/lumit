@@ -16,7 +16,7 @@ The next target is to keep the CLI working while extracting all reusable project
 - Published CLI package: `@luucaohoang/lumit`
 - CLI binary: `lumit`
 - Current monorepo package version: `0.1.3`
-- Package manager: npm
+- Package manager: Bun
 - Runtime target: Node.js 20+
 - Supported templates:
   - `react-vite`
@@ -24,7 +24,7 @@ The next target is to keep the CLI working while extracting all reusable project
 
 ## Implemented Architecture
 
-The repository is an npm workspace monorepo:
+The repository is a Bun workspace monorepo:
 
 ```text
 packages/

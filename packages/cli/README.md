@@ -23,7 +23,7 @@ lumit doctor
 ```bash
 lumit create
 lumit create my-app --template react-vite
-lumit create my-app --template react-vite-ts --package-manager pnpm
+lumit create my-app --template react-vite-ts --package-manager bun
 lumit create my-app --template react-vite-ts --no-install
 lumit create my-app --template react-vite-ts --no-git
 lumit create my-app --template react-vite-ts --github --private

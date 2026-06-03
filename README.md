@@ -37,7 +37,7 @@ Run it:
 
 ```bash
 cd my-app
-npm run dev
+bun run dev
 ```
 
 ## Copy-Paste CLI Commands
@@ -60,7 +60,7 @@ React + Vite JavaScript:
 lumit create my-app --template react-vite
 ```
 
-Use pnpm:
+Use pnpm instead of the Bun default:
 
 ```bash
 lumit create my-app --template react-vite-ts --package-manager pnpm
@@ -101,9 +101,9 @@ lumit create my-app --template react-vite-ts
 Runs the equivalent of:
 
 ```bash
-npm create vite@latest my-app -- --template react-ts
+bun create vite my-app --template react-ts
 cd my-app
-npm install
+bun install
 git init
 git add .
 git commit -m "Initial commit"
@@ -126,38 +126,38 @@ gh repo create my-app --source=. --remote=origin --private --push
 Install all workspaces:
 
 ```bash
-npm install
+bun install
 ```
 
 Typecheck:
 
 ```bash
-npm run typecheck
+bun run typecheck
 ```
 
 Build all packages:
 
 ```bash
-npm run build
+bun run build
 ```
 
 Run CLI from source:
 
 ```bash
-npm run dev:cli -- create my-app --template react-vite-ts
+bun run dev:cli -- create my-app --template react-vite-ts
 ```
 
 Run desktop app:
 
 ```bash
-npm run dev:desktop
+bun run dev:desktop
 ```
 
 If Electron reports a missing `path.txt` or binary, repair the local Electron install and run again:
 
 ```bash
-npm run repair:electron
-npm run dev:desktop
+bun run repair:electron
+bun run dev:desktop
 ```
 
 If your shell has `ELECTRON_RUN_AS_NODE=1`, the desktop script still works because it launches Electron through `scripts/run-electron.mjs` and removes that variable for the child process.
@@ -165,7 +165,7 @@ If your shell has `ELECTRON_RUN_AS_NODE=1`, the desktop script still works becau
 Pack the CLI package:
 
 ```bash
-npm run pack:cli
+bun run pack:cli
 ```
 
 ## Desktop App
@@ -238,11 +238,11 @@ lumit
 Release flow:
 
 ```bash
-npm ci
-npm run typecheck
-npm run build
-npm version patch --workspace packages/core
-npm version patch --workspace packages/cli
+bun install --frozen-lockfile
+bun run typecheck
+bun run build
+bun --cwd packages/core pm version patch
+bun --cwd packages/cli pm version patch
 git push --follow-tags
 ```
 

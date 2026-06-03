@@ -14,7 +14,7 @@ const defaultOptions = {
   projectName: "",
   targetDirectory: "",
   template: "react-vite-ts" as TemplateId,
-  packageManager: "npm" as PackageManager,
+  packageManager: "bun" as PackageManager,
   install: true,
   git: true,
   github: false,
@@ -108,10 +108,10 @@ function App(): React.ReactElement {
               value={form.packageManager}
               onChange={(event) => setForm({ ...form, packageManager: event.target.value as PackageManager })}
             >
+              <option value="bun">bun</option>
               <option value="npm">npm</option>
               <option value="pnpm">pnpm</option>
               <option value="yarn">yarn</option>
-              <option value="bun">bun</option>
             </select>
           </label>
 

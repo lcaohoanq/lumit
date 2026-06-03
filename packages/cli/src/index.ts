@@ -21,7 +21,7 @@ program
 
 Examples:
   $ lumit create my-app --template react-vite-ts
-  $ lumit create my-app --template react-vite --package-manager pnpm
+  $ lumit create my-app --template react-vite --package-manager bun
   $ lumit create my-app --template react-vite-ts --github --private
   $ lumit doctor
   $ lumit create
@@ -56,7 +56,7 @@ Copy-paste examples:
   $ lumit create my-app --template react-vite-ts
   $ lumit create my-app --template react-vite-ts --no-install
   $ lumit create my-app --template react-vite-ts --no-git
-  $ lumit create my-app --template react-vite-ts --package-manager pnpm
+  $ lumit create my-app --template react-vite-ts --package-manager bun
   $ lumit create my-app --template react-vite-ts --github --private
   $ lumit create my-app --template react-vite-ts --github --public
 
@@ -65,7 +65,7 @@ Interactive mode:
 
 Next step after creation:
   $ cd my-app
-  $ npm run dev
+  $ bun run dev
 `
   )
   .action(async (projectName: string | undefined, options: CliCreateOptions) => {

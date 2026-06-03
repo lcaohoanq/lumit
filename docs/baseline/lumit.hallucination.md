@@ -92,6 +92,17 @@ Decision: dev-only desktop app for this phase.
 
 Reason: the MVP needs a working shared-core desktop surface before installer packaging decisions.
 
+### Decision 8: Workspace Package Manager Migration
+
+Options:
+
+- Keep npm workspaces.
+- Switch local workspace development and CI to Bun.
+
+Decision: switch local workspace development and CI to Bun.
+
+Reason: requested migration from npm to Bun while keeping the published packages on the npm registry.
+
 ## Open Risks
 
 No open risks currently.

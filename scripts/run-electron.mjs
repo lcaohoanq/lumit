@@ -9,7 +9,7 @@ const electronDir = dirname(electronPackagePath);
 const electronPathFile = join(electronDir, "path.txt");
 
 if (!existsSync(electronPathFile)) {
-  throw new Error("Electron path.txt is missing. Run `npm run repair:electron` first.");
+  throw new Error("Electron path.txt is missing. Run `bun run repair:electron` first.");
 }
 
 const electronExecutable = join(electronDir, "dist", readFileSync(electronPathFile, "utf8").trim());
