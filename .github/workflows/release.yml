@@ -34,7 +34,12 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Publish package
-        run: npm publish --provenance
+      - name: Publish core package
+        run: npm publish --workspace packages/core --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish CLI package
+        run: npm publish --workspace packages/cli --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

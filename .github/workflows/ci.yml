@@ -41,5 +41,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Pack package
-        run: npm pack --dry-run
+      - name: Pack core package
+        run: npm pack --workspace packages/core --dry-run
+
+      - name: Pack CLI package
+        run: npm pack --workspace packages/cli --dry-run

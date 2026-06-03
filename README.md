@@ -1,22 +1,31 @@
-# lumit
+# Lumit
 
-`lumit` is a CLI for creating starter projects quickly. It creates the project, installs dependencies, initializes Git, creates the first commit, and can optionally create and push a GitHub repository with GitHub CLI.
+Lumit is a starter project generator for developers. It creates React + Vite projects, installs dependencies, initializes Git, creates the first commit, and can optionally create and push a GitHub repository with GitHub CLI.
 
-The MVP supports React + Vite templates.
+This repository is now a monorepo with a shared core package, a published CLI, and an Electron desktop app.
 
-## Install
+## Packages
+
+```text
+packages/
+  core/      Shared project creation logic
+  cli/       Published npm CLI package
+  desktop/   Electron + React desktop app
+```
+
+## Install CLI
 
 ```bash
 npm install -g @luucaohoang/lumit
 ```
 
-Check that it works:
+Check the command:
 
 ```bash
 lumit --help
 ```
 
-## Quick Start
+## CLI Quick Start
 
 Create a React + Vite + TypeScript app:
 
@@ -24,28 +33,28 @@ Create a React + Vite + TypeScript app:
 lumit create my-app --template react-vite-ts
 ```
 
-Then run it:
+Run it:
 
 ```bash
 cd my-app
 npm run dev
 ```
 
-## Copy-Paste Commands
+## Copy-Paste CLI Commands
 
-Create with interactive prompts:
+Interactive mode:
 
 ```bash
 lumit create
 ```
 
-Create React + Vite + TypeScript:
+React + Vite + TypeScript:
 
 ```bash
 lumit create my-app --template react-vite-ts
 ```
 
-Create React + Vite JavaScript:
+React + Vite JavaScript:
 
 ```bash
 lumit create my-app --template react-vite
@@ -57,25 +66,13 @@ Use pnpm:
 lumit create my-app --template react-vite-ts --package-manager pnpm
 ```
 
-Use yarn:
-
-```bash
-lumit create my-app --template react-vite-ts --package-manager yarn
-```
-
-Use bun:
-
-```bash
-lumit create my-app --template react-vite-ts --package-manager bun
-```
-
 Skip dependency installation:
 
 ```bash
 lumit create my-app --template react-vite-ts --no-install
 ```
 
-Skip Git initialization:
+Skip Git:
 
 ```bash
 lumit create my-app --template react-vite-ts --no-git
@@ -87,13 +84,13 @@ Create a private GitHub repo and push:
 lumit create my-app --template react-vite-ts --github --private
 ```
 
-Create a public GitHub repo and push:
+Check local tooling:
 
 ```bash
-lumit create my-app --template react-vite-ts --github --public
+lumit doctor
 ```
 
-## What It Runs
+## What `create` Runs
 
 This command:
 
@@ -124,118 +121,109 @@ It also runs:
 gh repo create my-app --source=. --remote=origin --private --push
 ```
 
-## Templates
-
-| Template | Description |
-| --- | --- |
-| `react-vite` | React + Vite |
-| `react-vite-ts` | React + Vite + TypeScript |
-
-## Options
-
-| Option | Description |
-| --- | --- |
-| `--template <id>` | Select a template: `react-vite` or `react-vite-ts` |
-| `--package-manager <name>` | Select `npm`, `pnpm`, `yarn`, or `bun` |
-| `--no-install` | Skip dependency installation |
-| `--no-git` | Skip `git init`, `git add .`, and initial commit |
-| `--github` | Create a GitHub repository with GitHub CLI |
-| `--private` | Create a private GitHub repository |
-| `--public` | Create a public GitHub repository |
-
-## Interactive Mode
-
-If you do not pass enough options, `lumit` asks what to do:
-
-```bash
-lumit create
-```
-
-It can ask for:
-
-- Project name
-- Template
-- Package manager
-- Whether to install dependencies
-- Whether to initialize Git
-- Whether to create a GitHub repository
-- Public or private repository
-- Whether to push immediately
-
-## Requirements
-
-- Node.js 20+
-- npm, pnpm, yarn, or bun
-- Git, unless you use `--no-git`
-- GitHub CLI, only if you use `--github`
-
-For GitHub repo creation, install and login with GitHub CLI:
-
-```bash
-gh auth login
-```
-
 ## Local Development
 
-Install dependencies:
+Install all workspaces:
 
 ```bash
 npm install
 ```
 
-Run typecheck:
+Typecheck:
 
 ```bash
 npm run typecheck
 ```
 
-Build:
+Build all packages:
 
 ```bash
 npm run build
 ```
 
-Link locally:
+Run CLI from source:
 
 ```bash
-npm link
+npm run dev:cli -- create my-app --template react-vite-ts
 ```
 
-Run the local CLI:
+Run desktop app:
 
 ```bash
-lumit create my-app --template react-vite-ts
+npm run dev:desktop
 ```
 
-Run from source without linking:
+Pack the CLI package:
 
 ```bash
-npm run dev -- create my-app --template react-vite-ts
+npm run pack:cli
 ```
 
-## Release to npm
+## Desktop App
 
-The package is published as:
+The desktop app is an Electron + React + TypeScript MVP. It uses the same core package as the CLI.
+
+It includes:
+
+- Project creation form
+- Folder picker
+- Template/package-manager selection
+- Install/Git/GitHub options
+- Realtime logs
+- Environment checker
+- Result actions for opening folder, VS Code, and GitHub URL when available
+
+Renderer security:
+
+- `nodeIntegration: false`
+- `contextIsolation: true`
+- IPC API exposed through `contextBridge`
+
+## Core API
+
+`packages/core` exports:
+
+```ts
+createProject(options, callbacks)
+checkEnvironment()
+```
+
+The core package owns validation, target folder checks, template commands, dependency install, Git, GitHub CLI, push, and progress callbacks.
+
+## Baseline Docs
+
+Baseline docs live in:
+
+```text
+docs/baseline/
+```
+
+They are the source of truth for resuming work without relying on prior conversation memory:
+
+- `lumit.introduction.md`
+- `lumit.roadmap.md`
+- `lumit.hallucination.md`
+
+Update them whenever the codebase changes.
+
+## Release
+
+The core package is published first:
+
+```bash
+@luucaohoang/lumit-core
+```
+
+The CLI is published from `packages/cli` as:
 
 ```bash
 @luucaohoang/lumit
 ```
 
-The installed command is still:
+The installed command remains:
 
 ```bash
 lumit
-```
-
-Before the first release, add an npm automation token to GitHub:
-
-```text
-GitHub repository
-Settings
-Secrets and variables
-Actions
-New repository secret
-Name: NPM_TOKEN
 ```
 
 Release flow:
@@ -244,11 +232,12 @@ Release flow:
 npm ci
 npm run typecheck
 npm run build
-npm version patch
+npm version patch --workspace packages/core
+npm version patch --workspace packages/cli
 git push --follow-tags
 ```
 
-Then create a GitHub Release from the new tag and publish it. The GitHub Actions release workflow will publish to npm.
+Create a GitHub Release from the new tag. The release workflow publishes the CLI package to npm.
 
 ## Troubleshooting
 
@@ -258,7 +247,7 @@ PowerShell blocks `lumit.ps1` on Windows:
 lumit.cmd --help
 ```
 
-Git commit fails because user identity is missing:
+Git identity is missing:
 
 ```bash
 git config --global user.name "Your Name"
@@ -270,26 +259,3 @@ GitHub CLI is not logged in:
 ```bash
 gh auth login
 ```
-
-Package manager is missing:
-
-```bash
-npm --version
-pnpm --version
-yarn --version
-bun --version
-```
-
-## Extending Templates
-
-Add new template modules under `src/templates/` and export them through `src/templates/index.ts`.
-
-Each template defines:
-
-- Template id
-- Display name
-- Framework
-- Create command per package manager
-- Dev command
-
-This keeps future support for Next.js, Vue, Svelte, Express, NestJS, Laravel, Tailwind, ESLint, Prettier, React Router, Zustand, Axios, shadcn/ui, and custom presets separate from the create command orchestration.
