@@ -103,52 +103,7 @@ npm run build
 npm run dev -- create my-app --template react-vite-ts
 ```
 
-## Release to npm with GitHub Releases
-
-This repository includes GitHub Actions for CI and npm publishing:
-
-- `.github/workflows/ci.yml` runs on pull requests and pushes to `main` or `master`.
-- `.github/workflows/release.yml` publishes to npm when a GitHub Release is published.
-
-Before the first release:
-
-1. Create an npm automation token.
-2. Add it to the GitHub repository secrets as `NPM_TOKEN`.
-3. Make sure the package scope in `package.json` belongs to your npm account or organization.
-
-This package is published under the scoped npm name `@luucaohoang/lumit`, while the installed CLI command remains `lumit`:
-
-```json
-{
-  "name": "@luucaohoang/lumit",
-  "bin": {
-    "lumit": "./dist/index.js"
-  }
-}
-```
-
-If your npm account uses a different scope, update the `name` field before publishing.
-
-Release flow:
-
-```bash
-npm ci
-npm run typecheck
-npm run build
-npm version patch
-git push --follow-tags
-```
-
-Then create and publish a GitHub Release from the new tag. The release workflow will run:
-
-```bash
-npm ci
-npm run typecheck
-npm run build
-npm publish --provenance
-```
-
-Users can install the published CLI with:
+## Install and using
 
 ```bash
 npm install -g @luucaohoang/lumit
