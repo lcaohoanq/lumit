@@ -1,11 +1,12 @@
 import { downloadArtifact } from "@electron/get";
 import { spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
-const require = createRequire(import.meta.url);
-const electronPackagePath = require.resolve("electron/package.json");
+const scriptDir = dirname(fileURLToPath(import.meta.url));
+const electronPackagePath = resolvePackage("electron/package.json");
 const electronDir = dirname(electronPackagePath);
 const electronPackage = JSON.parse(readFileSync(electronPackagePath, "utf8"));
 const platformPath = getPlatformPath();
@@ -28,14 +29,7 @@ const distDir = join(electronDir, "dist");
 rmSync(distDir, { recursive: true, force: true });
 mkdirSync(distDir, { recursive: true });
 
-const extract = spawnSync("tar", ["-xf", zipPath, "-C", distDir], {
-  stdio: "inherit",
-  shell: process.platform === "win32"
-});
-
-if (extract.status !== 0) {
-  throw new Error("Unable to extract Electron binary. Make sure `tar` is available on PATH.");
-}
+extractArchive(zipPath, distDir);
 
 writeFileSync(join(electronDir, "path.txt"), platformPath);
 
@@ -66,4 +60,44 @@ function getPlatformPath() {
     default:
       throw new Error(`Electron builds are not available on platform: ${process.platform}`);
   }
+}
+
+function extractArchive(zipPath, distDir) {
+  const tar = process.platform === "win32"
+    ? join(process.env.SystemRoot ?? "C:\\Windows", "System32", "tar.exe")
+    : "tar";
+
+  const result = spawnSync(tar, ["-xf", zipPath, "-C", distDir], {
+    stdio: "inherit",
+    shell: false
+  });
+
+  if (result.status !== 0) {
+    throw new Error(`Unable to extract Electron binary with ${tar}.`);
+  }
+}
+
+function resolvePackage(specifier) {
+  const requirePaths = [
+    join(process.cwd(), "package.json"),
+    resolve(scriptDir, "../packages/desktop/package.json"),
+    resolve(scriptDir, "../package.json")
+  ];
+
+  for (const requirePath of requirePaths) {
+    if (!existsSync(requirePath)) {
+      continue;
+    }
+
+    const require = createRequire(requirePath);
+    try {
+      return require.resolve(specifier);
+    } catch (error) {
+      if (error?.code !== "MODULE_NOT_FOUND") {
+        throw error;
+      }
+    }
+  }
+
+  throw new Error(`Cannot resolve ${specifier}. Run this script from the desktop package or install dependencies first.`);
 }
