@@ -10,7 +10,7 @@
     "build:main": "tsc -p tsconfig.main.json",
     "build:renderer": "vite build",
     "dev": "bun run build && node ../../scripts/ensure-electron.mjs && node ../../scripts/run-electron.mjs dist/main/index.js",
-    "typecheck": "tsc -p tsconfig.main.json --noEmit && tsc -p tsconfig.renderer.json --noEmit"
+    "typecheck": "tsc -b tsconfig.main.json --noEmit && tsc -p tsconfig.renderer.json --noEmit"
   },
   "dependencies": {
     "@luucaohoang/lumit-core": "file:../core",
