@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build": "bun run --filter @luucaohoang/lumit-core build && bun run --filter @luucaohoang/lumit build && bun run --filter @luucaohoang/lumit-desktop build",
-    "typecheck": "bun run --workspaces --if-present typecheck",
+    "typecheck": "tsc -b --force && tsc -p packages/desktop/tsconfig.renderer.json --noEmit",
     "dev:cli": "bun run --filter @luucaohoang/lumit dev --",
     "dev:desktop": "bun run --filter @luucaohoang/lumit-desktop dev",
     "repair:electron": "node scripts/ensure-electron.mjs",
